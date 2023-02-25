@@ -5,8 +5,7 @@ import { SessionProvider as NextAuthProvider } from "next-auth/react";
 
 import "../styles/global.scss";
 
-function MyApp({ Component, pageProps: {session, ...pageProps} }: AppProps) {
-  console.log("Session: ", session);
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <NextAuthProvider session={session}>
       <Header />
@@ -15,4 +14,4 @@ function MyApp({ Component, pageProps: {session, ...pageProps} }: AppProps) {
   );
 }
 
-export default MyApp
+export default MyApp;
