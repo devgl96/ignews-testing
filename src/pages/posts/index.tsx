@@ -1,9 +1,7 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 
-import Prismic from "@prismicio/client";
-
-import * as prismicH from '@prismicio/helpers';
+import * as prismicH from "@prismicio/helpers";
 
 import { getPrismicClient } from "../../services/prismic";
 import styles from "./styles.module.scss";
@@ -29,7 +27,7 @@ export default function Posts({ posts }: PostsProps) {
 
       <main className={styles.container}>
         <div className={styles.posts}>
-          {posts.map(post => (
+          {posts.map((post) => (
             <Link key={post.slug} href={`/posts/${post.slug}`}>
               <a>
                 <time>{post.updatedAt}</time>
@@ -54,24 +52,28 @@ export const getStaticProps: GetStaticProps = async () => {
     pageSize: 100,
   });
 
-  const posts = response.map(post => {
-      return {
-        slug: post.uid,
-        title: prismicH.asText(post.data.title),
-        excerpt: post.data.content.find((content: any) => content.type === 'paragraph')?.text ?? '',
-        updatedAt: new Date(post.last_publication_date).toLocaleDateString("pt-BR", {
+  const posts = response.map((post) => {
+    return {
+      slug: post.uid,
+      title: prismicH.asText(post.data.title),
+      excerpt:
+        post.data.content.find((content: any) => content.type === "paragraph")
+          ?.text ?? "",
+      updatedAt: new Date(post.last_publication_date).toLocaleDateString(
+        "pt-BR",
+        {
           day: "2-digit",
           month: "long",
-          year: "numeric"
-        })
-      };
-    }
-  );
+          year: "numeric",
+        }
+      ),
+    };
+  });
 
   // console.log("Response: ", JSON.stringify(response, null, 2));
   // console.log("Response: ", response);
 
   return {
-    props: {posts}
+    props: { posts },
   };
 };
